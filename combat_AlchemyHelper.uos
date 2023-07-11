@@ -1,0 +1,45 @@
+#Set Aliases
+
+setalias 'Greater Heal Potion' 0x0F0C
+setalias 'Greater Cure Potion' 0x0F07
+
+#Cure Poison - Keep trying until poison is cured, otherwise we can't heal.
+while not dead and hits < 85 and poisoned 'self'
+    if counttype 0x0F07 'any' 'backpack' > 0
+        headmsg 'Drinking a cure potion!' 66
+        togglehands 'left'
+        pause 1500
+        usetype 'Greater Cure Potion' 'any' 'backpack'
+        pause 1500
+        togglehands 'left'
+        
+        if counttype 'Greater Cure Potion' 'any' 'backpack' < 5
+            headmsg 'Less than 5 cure pots remaining!' 86
+        endif
+    else
+        headmsg 'Health is low, but you have no greater cure potions!' 86
+    endif
+   
+   pause 12000
+endwhile
+
+#Greater Heal Potion
+while not dead and hits < 85 and not poisoned 'self'
+    if counttype 0x0F0C 'any' 'backpack' > 0
+        headmsg 'Drinking a heal potion!' 66
+       togglehands 'left'
+       pause 1500
+       usetype 'Greater Heal Potion' 'any' 'backpack'
+       pause 1500
+       togglehands 'left'
+    
+       # Greater Heal Warning
+       if counttype 'Greater Heal Potion' 'any' 'backpack' < 5
+           headmsg 'Less than 5 heal pots remaining!' 86
+       endif
+   else
+       headmsg 'Health is low, but you have no greater heal potions!' 86
+   endif
+    
+   pause 12000
+endwhile
